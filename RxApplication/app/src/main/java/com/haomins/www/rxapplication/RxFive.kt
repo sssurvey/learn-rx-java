@@ -17,6 +17,10 @@ class RxFive {
 
     }
 
+    /**
+     * Demo of how to use the lift and work with Observable to create custom operators,
+     * ObservableOperator<DownStream, UpStream>
+     */
     fun learnLift() {
         Observable.just(1, 2, 3).lift(
             ObservableOperator<String, Int> {
@@ -34,7 +38,6 @@ class RxFive {
                 override fun onError(e: Throwable?) { Log.d(TAG, "final onError :: ${e?.printStackTrace()}") }
             }
         )
-
     }
 
 
