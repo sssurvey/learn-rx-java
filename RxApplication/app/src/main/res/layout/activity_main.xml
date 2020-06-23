@@ -40,8 +40,17 @@
         android:id="@+id/rx_five_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
         android:layout_below="@id/rx_one_button"
+        android:layout_margin="5dp"
         android:text="Rx 5" />
+
+    <Button
+        android:id="@+id/rx_subject_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rx_two_button"
+        android:layout_margin="5dp"
+        android:layout_toEndOf="@id/rx_five_button"
+        android:text="Rx Sbj" />
 
 </RelativeLayout>

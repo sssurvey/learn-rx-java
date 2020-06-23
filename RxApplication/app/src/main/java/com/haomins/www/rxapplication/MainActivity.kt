@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rxThree: RxThree
     private lateinit var rxFour: RxFour
     private lateinit var rxFive: RxFive
+    private lateinit var rxSubjects: RxSubjects
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         rx_three_button.setOnClickListener { initRxThree() }
         rx_four_button.setOnClickListener { initRxFour() }
         rx_five_button.setOnClickListener { initRxFive() }
+        rx_subject_button.setOnClickListener { initRxSubject() }
     }
 
     private fun initRxOne() {
@@ -79,5 +81,10 @@ class MainActivity : AppCompatActivity() {
         rxFive = RxFive()
         rxFive.learnCompose()
         rxFive.learnLift()
+    }
+
+    private fun initRxSubject() {
+        rxSubjects = RxSubjects()
+        rxSubjects.fakeMain()
     }
 }
