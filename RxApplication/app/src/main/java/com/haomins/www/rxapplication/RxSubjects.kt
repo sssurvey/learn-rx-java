@@ -37,14 +37,14 @@ class RxSubjects {
     }
 
     /**
-     * Imagine this as a public API
+     * Imagine this as a public API of this class
      */
     private fun observe(): Observable<Int> {
         return demoSubject
     }
 
     /**
-     * Imagine calling this in Activity
+     * Imagine calling this in Activity to use this class rx api, as fakeMain is onCreate in activity or something
      */
     fun fakeMain() {
 
