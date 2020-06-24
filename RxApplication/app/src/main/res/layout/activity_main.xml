@@ -53,4 +53,13 @@
         android:layout_toEndOf="@id/rx_five_button"
         android:text="Rx Sbj" />
 
+    <Button
+        android:id="@+id/rx_connectable_observable_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rx_three_button"
+        android:layout_margin="5dp"
+        android:layout_toEndOf="@id/rx_subject_button"
+        android:text="Rx ConnectObservable" />
+
 </RelativeLayout>

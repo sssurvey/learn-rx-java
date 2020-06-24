@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rxFour: RxFour
     private lateinit var rxFive: RxFive
     private lateinit var rxSubjects: RxSubjects
+    private lateinit var rxConnectableObservable: RxConnectableObservable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         rx_four_button.setOnClickListener { initRxFour() }
         rx_five_button.setOnClickListener { initRxFive() }
         rx_subject_button.setOnClickListener { initRxSubject() }
+        rx_connectable_observable_button.setOnClickListener { initConnectableObservable() }
     }
 
     private fun initRxOne() {
@@ -86,5 +88,10 @@ class MainActivity : AppCompatActivity() {
     private fun initRxSubject() {
         rxSubjects = RxSubjects()
         rxSubjects.fakeMain()
+    }
+
+    private fun initConnectableObservable() {
+        rxConnectableObservable = RxConnectableObservable()
+        rxConnectableObservable.fakeMain()
     }
 }
