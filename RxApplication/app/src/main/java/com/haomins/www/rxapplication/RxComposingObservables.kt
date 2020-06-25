@@ -28,6 +28,7 @@ class RxComposingObservables {
     }
 
     private fun loadExistingApiLazilyWithPaging(initialPage: Int): Observable<String> {
+        // defer is just like by lazy {}
         return Observable.defer {
             Log.d(TAG, "loadExistingApiLazilyWithPaging() called with page: $initialPage")
             Observable.fromIterable(fakeDbQuery(initialPage))
