@@ -40,16 +40,40 @@ class RxComposingObservables {
     }
 
     fun fakeMain() {
-        val sub = loadExistingApiLazilyWithPaging(initialPage = 1).doOnNext {
-            Log.d(TAG, "result loaded = row -> $it")
-        }.subscribe()
 
-        val runnable = Runnable {
-            Log.d(TAG, "--- disposed subscription, we are not querying anymore")
-            sub.dispose()
+        val testIndex = 1
+
+        when (testIndex) {
+            0 -> {
+                val sub = loadExistingApiLazilyWithPaging(initialPage = 1).doOnNext {
+                    Log.d(TAG, "result loaded = row -> $it")
+                }.subscribe()
+
+                val runnable = Runnable {
+                    Log.d(TAG, "--- disposed subscription, we are not querying anymore")
+                    sub.dispose()
+                }
+
+                Handler().postDelayed(runnable, 4000)
+            }
+            1 -> {
+                val lazyPagingAlternative = Observable.range(0, Int.MAX_VALUE).map {
+                    fakeDbQuery(it)
+                }.takeWhile {
+                    // just a dump way to force a condition to stop for the sake of this practice
+                    !it[0].contains("#: 3")
+                }
+                    .observeOn(Schedulers.io())
+                    .subscribeOn(AndroidSchedulers.mainThread())
+
+                lazyPagingAlternative.subscribe {
+                    it.forEach {
+                        Log.d(TAG, "lazyPagingAlter -> $it")
+                    }
+                }
+            }
+            else -> {}
         }
-        //TODO: why is this never called?
-        Handler().postDelayed(runnable, 4000)
     }
 
 }
