@@ -64,14 +64,16 @@ class RxComposingObservables {
                     // just a dump way to force a condition to stop for the sake of this practice
                     !it[0].contains("#: 3")
                 }
+
+                lazyPagingAlternative
+                    .concatMap {
+                        Observable.fromIterable(it)
+                    }
                     .observeOn(Schedulers.io())
                     .subscribeOn(AndroidSchedulers.mainThread())
-
-                lazyPagingAlternative.subscribe {
-                    it.forEach {
+                    .subscribe {
                         Log.d(TAG, "lazyPagingAlter -> $it")
                     }
-                }
             }
             else -> {}
         }
