@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rxFive: RxFive
     private lateinit var rxSubjects: RxSubjects
     private lateinit var rxConnectableObservable: RxConnectableObservable
+    private lateinit var rxComposingObservables: RxComposingObservables
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         rx_five_button.setOnClickListener { initRxFive() }
         rx_subject_button.setOnClickListener { initRxSubject() }
         rx_connectable_observable_button.setOnClickListener { initConnectableObservable() }
+        rx_composing_observables_button.setOnClickListener { initComposingObservables() }
     }
 
     private fun initRxOne() {
@@ -93,5 +95,10 @@ class MainActivity : AppCompatActivity() {
     private fun initConnectableObservable() {
         rxConnectableObservable = RxConnectableObservable()
         rxConnectableObservable.fakeMain()
+    }
+
+    private fun initComposingObservables() {
+        rxComposingObservables = RxComposingObservables()
+        rxComposingObservables.fakeMain()
     }
 }
