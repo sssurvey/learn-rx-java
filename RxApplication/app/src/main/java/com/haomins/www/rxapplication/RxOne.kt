@@ -58,6 +58,31 @@ class RxOne {
         compositeDisposable.add(disposable)
     }
 
+    fun flatMapIterable() {
+        Log.d(TAG, "flatMapIterable() starts")
+        val disposable = Observable.just(
+            "a" to listOf(1,2),
+            "b" to listOf(3,4),
+            "c" to listOf(5,6),
+            "d" to listOf(7,8)
+        )
+            .flatMapIterable { it.second }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe (
+                {
+                    Log.d(TAG, "flatMapIterable() onNext:: $it")
+                },
+                {
+                    Log.d(TAG, "flatMapIterable() onError:: Ignored")
+                },
+                {
+                    Log.d(TAG, "onComplete flatMapIterable()")
+                }
+            )
+        compositeDisposable.add(disposable)
+    }
+
     private fun concatMapKeepOrder() {
         Log.d(TAG, "concatMapKeepOrder() starts")
         val disposable = Observable.just(1, 2).concatMap(this::doIf).observeOn(Schedulers.io())

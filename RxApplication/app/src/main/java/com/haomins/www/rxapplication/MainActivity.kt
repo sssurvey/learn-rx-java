@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         rxOne = RxOne()
         rxOne.delayOperator()
         rxOne.flatMapNoOrder()
+        rxOne.flatMapIterable()
     }
 
     private fun initRxTwo() {
