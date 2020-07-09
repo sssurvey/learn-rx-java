@@ -16,7 +16,8 @@ class RxFlowControl {
         Observable
             .interval(1, TimeUnit.SECONDS)
             .take(15)
-            .buffer(5) // change to list with size == 5
+//            .buffer(5, { HashSet<Long>() }) // change to hash set with size == 5
+            .buffer(5) // change to list with size == 5, default to list...
             .subscribeOn(Schedulers.io())
             .subscribe(
                 { Log.d(TAG, "buffer1 :: onNext called -> $it") },
