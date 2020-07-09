@@ -2,6 +2,7 @@ package com.haomins.www.rxapplication
 
 import android.util.Log
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
@@ -40,6 +41,34 @@ class RxFlowControl {
                 { Log.d(TAG, "buffer2 :: onNext called -> $it") },
                 { Log.d(TAG, "buffer2 :: onError called") },
                 { Log.d(TAG, "buffer2 :: onComplete called") }
+            )
+    }
+
+    fun buffer3() {
+        val names = Observable
+            .just(
+                "Marry", "Harry", "Terry", "Jerry", "Larry",
+                "Berry", "Lorry", "Henry", "Rob", "Bob"
+            )
+        val delays = Observable
+            .just(
+                100L, 600L, 900L, 1100L, 3300L,
+                3400L, 3500L, 3600L, 4400L, 4800L
+            )
+        val delayedNames = Observable
+            .zip(
+                names,
+                delays,
+                BiFunction { name: String, delay: Long -> Observable.just(name).delay(delay, TimeUnit.MILLISECONDS) }
+            )
+        delayedNames
+            .flatMap { it }
+            .buffer(1L, TimeUnit.SECONDS)
+            .subscribeOn(Schedulers.io())
+            .subscribe(
+                { Log.d(TAG, "buffer3 :: onNext called -> $it ")},
+                { Log.d(TAG, "buffer3 :: onError called") },
+                { Log.d(TAG, "buffer3 :: onCompleted called") }
             )
     }
 

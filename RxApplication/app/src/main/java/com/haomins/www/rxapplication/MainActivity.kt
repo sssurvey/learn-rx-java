@@ -109,5 +109,6 @@ class MainActivity : AppCompatActivity() {
         rxFlowControl = RxFlowControl()
         rxFlowControl.buffer1()
         rxFlowControl.buffer2()
+        rxFlowControl.buffer3()
     }
 }
