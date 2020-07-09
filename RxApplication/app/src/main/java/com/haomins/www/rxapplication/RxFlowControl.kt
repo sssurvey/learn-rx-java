@@ -114,11 +114,38 @@ class RxFlowControl {
             Observable.empty<Unit>().delay(if (isGoodPrice) 10L else 100L, TimeUnit.MILLISECONDS)
         }
             .take(40)
+            .subscribeOn(Schedulers.io())
             .subscribe(
                 { Log.d(TAG, "debounce1 :: onNext called -> current price is - $it") },
                 { Log.d(TAG, "debounce1 :: onError called") },
                 { Log.d(TAG, "debounce1 :: onComplete called") }
             )
-
     }
+
+    fun debounce2() {
+        // show case of debounce starving
+        val demo = Observable
+            .interval(99, TimeUnit.MILLISECONDS)
+
+        demo
+            .debounce(100, TimeUnit.MILLISECONDS)
+//             you can use time out to emit on error, if nothing was emitted for too long
+//            .timeout(1, TimeUnit.SECONDS)
+//             you can use the overrided version on time out to allow a fallback instead of onError()
+            .timeout(1, TimeUnit.SECONDS, {
+                Log.d(TAG, "debounce2 :: timeout sample")
+                // but then, for each .take() we will need to reapply the now missing, debounce()
+                // and timeout(), which for each new .take() again, we nned to continue with this
+                demo.take(1)
+                // TODO: can you find a way to continue the stream, and apply new timeOut() strategy
+                // for all the new items emitted?
+            })
+            .subscribeOn(Schedulers.io())
+            .subscribe(
+                { Log.d(TAG, "debounce2 :: onNext called - $it") },
+                { Log.d(TAG, "debounce2 :: onError called") },
+                { Log.d(TAG, "debounce2 :: onComplete called") }
+            )
+    }
+
 }
