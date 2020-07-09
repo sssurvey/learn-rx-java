@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rxSubjects: RxSubjects
     private lateinit var rxConnectableObservable: RxConnectableObservable
     private lateinit var rxComposingObservables: RxComposingObservables
+    private lateinit var rxFlowControl: RxFlowControl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         rx_subject_button.setOnClickListener { initRxSubject() }
         rx_connectable_observable_button.setOnClickListener { initConnectableObservable() }
         rx_composing_observables_button.setOnClickListener { initComposingObservables() }
+        rx_flow_control_button.setOnClickListener { initRxFlowControl() }
     }
 
     private fun initRxOne() {
@@ -101,5 +103,11 @@ class MainActivity : AppCompatActivity() {
     private fun initComposingObservables() {
         rxComposingObservables = RxComposingObservables()
         rxComposingObservables.fakeMain()
+    }
+
+    private fun initRxFlowControl() {
+        rxFlowControl = RxFlowControl()
+        rxFlowControl.buffer1()
+        rxFlowControl.buffer2()
     }
 }

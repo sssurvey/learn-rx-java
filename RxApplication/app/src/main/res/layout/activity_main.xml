@@ -69,4 +69,13 @@
         android:layout_below="@id/rx_five_button"
         android:layout_margin="5dp"
         android:text="Rx ComposingObservable" />
+
+    <Button
+        android:id="@+id/rx_flow_control_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rx_connectable_observable_button"
+        android:layout_toEndOf="@id/rx_composing_observables_button"
+        android:layout_margin="5dp"
+        android:text="Rx FlowControl" />
 </RelativeLayout>
