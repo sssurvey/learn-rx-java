@@ -4,7 +4,9 @@ import android.util.Log
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.math.BigDecimal
 import java.util.concurrent.TimeUnit
+import kotlin.math.sin
 
 class RxFlowControl {
 
@@ -92,4 +94,31 @@ class RxFlowControl {
             )
     }
 
+    fun debounce1() {
+
+        fun randomDelay(x: Long) = Observable
+            .just(x)
+            .delay((Math.random() * 100).toLong(), TimeUnit.MILLISECONDS)
+
+        fun randomPrices(x: Long) = 100 + Math.random() * 10 + (sin(x / 100.0) * 60.0)
+
+        val priceOf = Observable
+            .interval(50, TimeUnit.MILLISECONDS)
+            .flatMap { randomDelay(it) }
+            .map { randomPrices(it) }
+            .map(BigDecimal::valueOf)
+
+        priceOf.debounce {
+            val isGoodPrice = it > BigDecimal.valueOf(150)
+            // look into this function for the java doc, on debounce indicator
+            Observable.empty<Unit>().delay(if (isGoodPrice) 10L else 100L, TimeUnit.MILLISECONDS)
+        }
+            .take(40)
+            .subscribe(
+                { Log.d(TAG, "debounce1 :: onNext called -> current price is - $it") },
+                { Log.d(TAG, "debounce1 :: onError called") },
+                { Log.d(TAG, "debounce1 :: onComplete called") }
+            )
+
+    }
 }
