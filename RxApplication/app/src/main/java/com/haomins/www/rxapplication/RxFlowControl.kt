@@ -73,4 +73,23 @@ class RxFlowControl {
             )
     }
 
+    fun window1() {
+        Observable
+            .interval(500, TimeUnit.MILLISECONDS)
+            .take(15)
+            // use the window to get a new Observable that will emit values in the time span
+            .window(1L, TimeUnit.SECONDS)
+            .doOnNext { Log.d(TAG, "window1 :: peaking list length -> ${it.count()}") }
+            // convert the new observable to list
+            .map { it.toList() }
+            .flatMapSingle { it }
+            .subscribeOn(Schedulers.io())
+            .subscribe(
+                // Now we can get the same output as buffer
+                { Log.d(TAG, "window1 :: onNext called -> $it") },
+                { Log.d(TAG, "window1 :: onError called") },
+                { Log.d(TAG, "window1 :: onComplete called") }
+            )
+    }
+
 }

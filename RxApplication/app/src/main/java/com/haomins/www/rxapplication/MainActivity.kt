@@ -110,5 +110,6 @@ class MainActivity : AppCompatActivity() {
         rxFlowControl.buffer1()
         rxFlowControl.buffer2()
         rxFlowControl.buffer3()
+        rxFlowControl.window1()
     }
 }
