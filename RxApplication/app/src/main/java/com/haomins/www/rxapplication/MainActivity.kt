@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rxConnectableObservable: RxConnectableObservable
     private lateinit var rxComposingObservables: RxComposingObservables
     private lateinit var rxFlowControl: RxFlowControl
+    private lateinit var rxBackPressure: RxBackPressure
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         rx_connectable_observable_button.setOnClickListener { initConnectableObservable() }
         rx_composing_observables_button.setOnClickListener { initComposingObservables() }
         rx_flow_control_button.setOnClickListener { initRxFlowControl() }
+        rx_back_pressure.setOnClickListener { initRxBackPressure() }
     }
 
     private fun initRxOne() {
@@ -113,5 +115,10 @@ class MainActivity : AppCompatActivity() {
         rxFlowControl.window1()
         rxFlowControl.debounce1()
         rxFlowControl.debounce2()
+    }
+
+    private fun initRxBackPressure() {
+        rxBackPressure = RxBackPressure()
+        rxBackPressure.backPressure1()
     }
 }
