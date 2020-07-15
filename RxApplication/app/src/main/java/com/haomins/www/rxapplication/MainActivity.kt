@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         rxFour.learnAll()
         rxFour.learnContains()
         rxFour.learnExist()
+        rxFour.learnDefer()
     }
 
     private fun initRxFive() {

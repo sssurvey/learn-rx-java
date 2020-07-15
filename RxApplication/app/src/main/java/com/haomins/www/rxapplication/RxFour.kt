@@ -122,7 +122,7 @@ class RxFour {
     fun learnAll() {
         Observable
             .range(0, 10)
-            .all { it >= 0}
+            .all { it >= 0 }
             .doOnSuccess { Log.d(TAG, "learnAll() :: onSuccess is all larger than 0? $it") }
             .subscribe()
     }
@@ -144,5 +144,26 @@ class RxFour {
             .first(false)
             .doOnSuccess { Log.d(TAG, "learnExist() :: onSuccess is >=3 exist in range? $it") }
             .subscribe()
+    }
+
+    fun learnDefer() {
+        val observable1 = Observable.just(Whatever, Whatever, Whatever)
+        val observable2 = Observable.just("a", "b", "c")
+        val observable3 = Observable
+            .defer {
+                observable1
+            }.flatMap {
+                observable2.doOnComplete { it.doThings() }
+            }.flatMap {
+                Observable.just("read the hint from IDE, 'it' says String!")
+            }
+
+        observable3.subscribe {
+            Log.d(RxBackPressure.TAG, "learnDefer() :: read the code $it")
+        }
+    }
+
+    private object Whatever {
+        fun doThings() {}
     }
 }
